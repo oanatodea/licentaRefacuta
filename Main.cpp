@@ -3,6 +3,7 @@
 #include "CannyAlg.h"
 #include "ROI.h"
 #include "IPMAlg.h"
+#include "ArrowClassification.h"
 
 Mat openImage(char* fileName) {
 	Mat src, grayImage;
@@ -69,6 +70,12 @@ void main() {
 		Mat finalClosedImage = closing(openedImage, 13);
 		imshow("Closed", finalClosedImage);
 
+		Mat imageToDrawArrowsColor = makeImageColor(finalClosedImage);
+		//Mat houghOnArrows = arrow(finalClosedImage, imageToDrawArrowsColor);
+		//imshow("Hough on arrows", houghOnArrows);
+
+		Mat etichetata = etichetare(finalClosedImage, openedImage);
+		ArrowClassification* arrows = new ArrowClassification(etichetata, imageToDrawArrowsColor);
 
 		//draw rectangle to show markings 
 		Mat colorImage = makeImageColor(inverseImage);
