@@ -291,22 +291,14 @@ Mat intToUcharMat(Mat src) {
 
 
 Mat ucharToLongMat(Mat src) {
-	Mat dst = Mat(src.rows, src.cols, DataType<long>::type);
-	for (int i = 0; i < src.rows; i++) {
-		for (int j = 0; j < src.cols; j++) {
-			dst.at<long>(i, j) = (long)src.at<uchar>(i, j);
-		}
-	}
+	Mat dst; 
+	src.convertTo(dst, CV_16UC1);
 	return dst;
 }
 
 
 Mat longToUcharMat(Mat src) {
-	Mat dst = Mat(src.rows, src.cols, DataType<uchar>::type);
-	for (int i = 0; i < src.rows; i++) {
-		for (int j = 0; j < src.cols; j++) {
-			dst.at<uchar>(i, j) = (uchar)src.at<long>(i, j);
-		}
-	}
+	Mat dst; 
+	src.convertTo(dst, CV_8UC1);
 	return dst;
 }

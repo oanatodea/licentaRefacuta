@@ -17,7 +17,7 @@ Mat openImage(char* fileName) {
 }
 
 void main() {
-	//readTemplates();
+	readTemplates();
 	char fname[MAX_PATH];
 	while (openFileDlg(fname))
 	{
