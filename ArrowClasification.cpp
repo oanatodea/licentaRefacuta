@@ -12,7 +12,8 @@ ArrowClassification::ArrowClassification(Mat grayImage, Mat colorImage) {
 void ArrowClassification::harris() {
 	vector<Point> corners;
 	vector<pair<Point, int>> cornersWithLabels;
-	goodFeaturesToTrack(src, corners, 10, 0.1, 10, noArray(), 5, true, 0.04);
+	Mat emptyImage(src.rows, src.cols, CV_8UC1, Scalar(0));
+	goodFeaturesToTrack(src, corners, 20, 0.1, 10, noArray(), 5, true, 0.04);
 	while (!corners.empty()) {
 		Point p = corners.back();
 		corners.pop_back();
@@ -37,10 +38,17 @@ void ArrowClassification::harris() {
 
 		if (label != 0) {
 			circle(colorImageToDraw, p, 5, Scalar(0, 0, 255), 2, 8, 0);
+			//emptyImage.at<uchar>(p) = 255;
 		}
 	}
-	imshow("Harris", colorImageToDraw);
-	cornersClasification(cornersWithLabels);
+	//vector<Vec4i> houghLines;
+	//HoughLinesP(emptyImage, houghLines, 1, M_PI * 2 / 180, 2, 10, 100);
+	//for (int i = 0; i < houghLines.size(); i++) {
+		//line(emptyImage, Point(houghLines[i][0], houghLines[i][1]), Point(houghLines[i][2], houghLines[i][3]), Scalar(255), 2, 8, 0);
+	//}
+	//imshow("Harris", emptyImage);
+
+	//cornersClasification(cornersWithLabels);
 	imshow("Final", colorImageToDraw);
 }
 
@@ -95,7 +103,7 @@ void ArrowClassification::classification(vector<Point> corners) {
 						indexInliners.push_back(j);
 						if (currentInliners == inlinersThreshold) {
 							inlinersFound = true;
-							//line(color_img, corners.at(indexInliners.at(0)), corners.at(indexInliners.at(1)), Scalar(255, 0, 0), 1, 8, 0);
+							line(colorImageToDraw, corners.at(indexInliners.at(0)), corners.at(indexInliners.at(1)), Scalar(255, 0, 0), 1, 8, 0);
 							ArrowType arrowType = findOrientation(corners, indexInliners);
 							drawRectangle(corners, arrowType);
 						}

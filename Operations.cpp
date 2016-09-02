@@ -267,3 +267,46 @@ bool checkMarking(vector<Point> markingPoints, int maxWidth) {
 	}
 	return true;
 }
+
+Mat ucharToIntMat(Mat src) {
+	Mat dst = Mat(src.rows, src.cols, DataType<int>::type);
+	for (int i = 0; i < src.rows; i++) {
+		for (int j = 0; j < src.cols; j++) {
+			dst.at<int>(i, j) = (int)src.at<uchar>(i, j);
+		}
+	}
+	return dst;
+}
+
+
+Mat intToUcharMat(Mat src) {
+	Mat dst = Mat(src.rows, src.cols, DataType<uchar>::type);
+	for (int i = 0; i < src.rows; i++) {
+		for (int j = 0; j < src.cols; j++) {
+			dst.at<uchar>(i, j) = (uchar)src.at<int>(i, j);
+		}
+	}
+	return dst;
+}
+
+
+Mat ucharToLongMat(Mat src) {
+	Mat dst = Mat(src.rows, src.cols, DataType<long>::type);
+	for (int i = 0; i < src.rows; i++) {
+		for (int j = 0; j < src.cols; j++) {
+			dst.at<long>(i, j) = (long)src.at<uchar>(i, j);
+		}
+	}
+	return dst;
+}
+
+
+Mat longToUcharMat(Mat src) {
+	Mat dst = Mat(src.rows, src.cols, DataType<uchar>::type);
+	for (int i = 0; i < src.rows; i++) {
+		for (int j = 0; j < src.cols; j++) {
+			dst.at<uchar>(i, j) = (uchar)src.at<long>(i, j);
+		}
+	}
+	return dst;
+}

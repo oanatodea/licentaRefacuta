@@ -18,3 +18,7 @@ Mat makeImageColor(Mat src);
 Mat otherMarkingsElimination(Mat src, int threshold, vector<Point>& markingPoints, int minLineWidth);
 int transversalMarking(Mat src, int threshold, int minLineWidth);
 bool checkMarking(vector<Point> markingPoints, int maxWidth);
+Mat intToUcharMat(Mat src);
+Mat ucharToIntMat(Mat src);
+Mat ucharToLongMat(Mat src);
+Mat longToUcharMat(Mat src);

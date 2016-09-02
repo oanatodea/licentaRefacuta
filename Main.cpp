@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "common.h"
-#include "CannyAlg.h"
 #include "ROI.h"
 #include "IPMAlg.h"
 #include "ArrowClassification.h"
+#include "DistanceTransform.h"
 
 Mat openImage(char* fileName) {
 	Mat src, grayImage;
@@ -16,28 +16,8 @@ Mat openImage(char* fileName) {
 	return src;
 }
 
-Mat ucharToIntMat(Mat src) {
-	Mat dst = Mat(src.rows, src.cols, DataType<int>::type);
-	for (int i = 0; i < src.rows; i++) {
-		for (int j = 0; j < src.cols; j++) {
-			dst.at<int>(i, j) = (int)src.at<uchar>(i, j);
-		}
-	}
-	return dst;
-}
-
-
-Mat intToUcharMat(Mat src) {
-	Mat dst = Mat(src.rows, src.cols, DataType<uchar>::type);
-	for (int i = 0; i < src.rows; i++) {
-		for (int j = 0; j < src.cols; j++) {
-			dst.at<uchar>(i, j) = (uchar)src.at<int>(i, j);
-		}
-	}
-	return dst;
-}
-
 void main() {
+	//readTemplates();
 	char fname[MAX_PATH];
 	while (openFileDlg(fname))
 	{
@@ -68,14 +48,13 @@ void main() {
 
 		Mat openedImage = opening(imageWithoutZebra, 9);
 		Mat finalClosedImage = closing(openedImage, 13);
-		imshow("Closed", finalClosedImage);
+		//imshow("Closed", finalClosedImage);
 
-		Mat imageToDrawArrowsColor = makeImageColor(finalClosedImage);
+		//Mat imageToDrawArrowsColor = makeImageColor(finalClosedImage);
 		//Mat houghOnArrows = arrow(finalClosedImage, imageToDrawArrowsColor);
 		//imshow("Hough on arrows", houghOnArrows);
 
-		Mat etichetata = etichetare(finalClosedImage, openedImage);
-		ArrowClassification* arrows = new ArrowClassification(etichetata, imageToDrawArrowsColor);
+		findArrows(finalClosedImage);
 
 		//draw rectangle to show markings 
 		Mat colorImage = makeImageColor(inverseImage);
